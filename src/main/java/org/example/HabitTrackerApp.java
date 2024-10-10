@@ -1,3 +1,4 @@
+package org.example;
 
 import org.example.controller.AdminController;
 import org.example.controller.UserController;
