@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.service.NotificationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
