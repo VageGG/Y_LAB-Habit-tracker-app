@@ -2,7 +2,6 @@ package org.example.service;
 
 import org.example.enums.Frequency;
 import org.example.model.Habit;
-import org.example.service.HabitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,8 @@
 package org.example.controller;
 
 import org.example.enums.Frequency;
-import org.example.model.User;
 import org.example.model.Habit;
-import org.example.controller.AdminController;
+import org.example.model.User;
 import org.example.service.HabitService;
 import org.example.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +12,7 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 public class AdminControllerTest {
     private AdminController adminController;
