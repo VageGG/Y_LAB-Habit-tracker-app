@@ -7,4 +7,4 @@
 ### ДЗ:
 
 **PR**: 
-1. [ДЗ №1]()
+1. [ДЗ №1](https://github.com/VageGG/Y_LAB-Habit-tracker-app/tree/main/Homework1)

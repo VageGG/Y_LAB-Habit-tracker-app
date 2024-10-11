@@ -15,8 +15,11 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 public class AdminControllerTest {
+
     private AdminController adminController;
+
     private UserService userService;
+
     private HabitService habitService;
 
     @BeforeEach

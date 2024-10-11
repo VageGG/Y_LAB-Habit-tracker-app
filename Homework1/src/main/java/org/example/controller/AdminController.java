@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class AdminController {
     private final UserService userService = new UserService();
+
     private final HabitService habitService = new HabitService();
 
     /**

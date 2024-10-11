@@ -6,9 +6,13 @@ import java.util.Objects;
  * Represents a user with an email, password, and name.
  */
 public class User {
+
     private String name;
+
     private final String email;
+
     private String password;
+
     private boolean blocked;
 
     /**

@@ -10,8 +10,11 @@ import java.util.Scanner;
  * @author Геворгян Ваге
  */
 public class HabitTrackerApp {
+
     private final AdminController adminController = new AdminController();
+
     private final UserController userController = new UserController();
+
     private final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {

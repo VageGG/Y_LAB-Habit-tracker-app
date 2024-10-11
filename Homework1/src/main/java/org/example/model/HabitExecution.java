@@ -6,7 +6,9 @@ import java.time.LocalDate;
  * Represents the execution of a habit on a specific date.
  */
 public class HabitExecution {
+
     private final LocalDate date;
+
     private final boolean completed;
 
     /**

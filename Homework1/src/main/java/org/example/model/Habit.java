@@ -11,9 +11,13 @@ import java.util.List;
  */
 public class Habit {
     private String name;
+
     private String description;
+
     private Frequency frequency;
+
     private LocalDate creationDate;
+
     private final List<HabitExecution> executionHistory;
 
     public Habit(String name, String description, Frequency frequency) {
