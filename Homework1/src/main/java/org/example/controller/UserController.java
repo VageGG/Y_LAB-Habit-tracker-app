@@ -15,8 +15,11 @@ import java.util.Scanner;
  */
 public class UserController {
     private final UserService userService;
+
     private final NotificationService notificationService;
+
     private final HabitService habitService;
+
     private final Scanner scanner = new Scanner(System.in);
 
     public UserController() {
