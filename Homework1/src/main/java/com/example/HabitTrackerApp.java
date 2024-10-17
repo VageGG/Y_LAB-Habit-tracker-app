@@ -1,7 +1,7 @@
-package org.example;
+package com.example;
 
-import org.example.controller.AdminController;
-import org.example.controller.UserController;
+import com.example.controller.UserController;
+import com.example.controller.AdminController;
 
 import java.util.Scanner;
 

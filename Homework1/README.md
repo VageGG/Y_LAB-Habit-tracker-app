@@ -25,19 +25,20 @@ Habit Tracker - это консольное приложение, написан
 1. Клонируйте репозиторий:
    ```bash
    git clone https://github.com/VageGG/Y_LAB-Habit-tracker-app.git
-
+   ```
 2. Перейдите в директорию проекта:
    ```bash
    cd Y_LAB-Habit-tracker-app
-
+   ```
 3. Соберите проект с помощью Maven:
    ```bash
    mvn clean install
-
+   ```
 ## Использование
    ```bash
-   mvn exec:java -Dexec.mainClass="org.example.HabitTrackerApp"
-
+   mvn exec:java -Dexec.mainClass="com.example.HabitTrackerApp"
+```
 ## Тестирование
    ```bash
    mvn test
+   ```

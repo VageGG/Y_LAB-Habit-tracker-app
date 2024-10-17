@@ -1,10 +1,10 @@
-package org.example.controller;
+package com.example.controller;
 
-import org.example.enums.Frequency;
-import org.example.model.Habit;
-import org.example.model.User;
-import org.example.service.HabitService;
-import org.example.service.UserService;
+import com.example.enums.Frequency;
+import com.example.model.Habit;
+import com.example.model.User;
+import com.example.service.HabitService;
+import com.example.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -55,7 +55,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.4.1</version>
         <configuration>
-          <mainClass>org.example.HabitTrackerApp</mainClass>
+          <mainClass>com.example.HabitTrackerApp</mainClass>
         </configuration>
       </plugin>
     </plugins>

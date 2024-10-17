@@ -1,6 +1,7 @@
-package org.example.service;
+package com.example.service;
 
-import org.example.model.User;
+import com.example.model.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ public class UserServiceTest {
 
         // Assert
         assertThat(result).isTrue();
-        assertThat(userService.getUser(email)).isNotNull();
+        Assertions.assertThat(userService.getUser(email)).isNotNull();
     }
 
     @Test
@@ -41,7 +42,7 @@ public class UserServiceTest {
 
         // Assert
         assertThat(result).isFalse();
-        assertThat(userService.getUser(email)).isNull();
+        Assertions.assertThat(userService.getUser(email)).isNull();
     }
 
     @Test
@@ -56,7 +57,7 @@ public class UserServiceTest {
 
         // Assert
         assertThat(result).isFalse();
-        assertThat(userService.getUser(email)).isNull();
+        Assertions.assertThat(userService.getUser(email)).isNull();
     }
 
     @Test
@@ -120,6 +121,6 @@ public class UserServiceTest {
 
         // Assert
         assertThat(result).isTrue();
-        assertThat(userService.getUser(email)).isNull();
+        Assertions.assertThat(userService.getUser(email)).isNull();
     }
 }

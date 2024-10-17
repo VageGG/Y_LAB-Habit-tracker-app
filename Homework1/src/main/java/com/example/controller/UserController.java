@@ -1,10 +1,10 @@
-package org.example.controller;
+package com.example.controller;
 
-import org.example.enums.Frequency;
-import org.example.model.Habit;
-import org.example.service.HabitService;
-import org.example.service.NotificationService;
-import org.example.service.UserService;
+import com.example.service.HabitService;
+import com.example.service.NotificationService;
+import com.example.service.UserService;
+import com.example.enums.Frequency;
+import com.example.model.Habit;
 
 import java.time.LocalDate;
 import java.util.List;

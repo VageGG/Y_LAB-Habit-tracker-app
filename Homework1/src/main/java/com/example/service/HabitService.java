@@ -1,8 +1,8 @@
-package org.example.service;
+package com.example.service;
 
-import org.example.enums.Frequency;
-import org.example.model.Habit;
-import org.example.model.HabitExecution;
+import com.example.enums.Frequency;
+import com.example.model.Habit;
+import com.example.model.HabitExecution;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,7 +1,8 @@
-package org.example.service;
+package com.example.service;
 
-import org.example.enums.Frequency;
-import org.example.model.Habit;
+import com.example.enums.Frequency;
+import com.example.model.Habit;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +34,7 @@ public class HabitServiceTest {
         assertThat(habits).hasSize(1);
         assertThat(habits.get(0).getName()).isEqualTo(name);
         assertThat(habits.get(0).getDescription()).isEqualTo(description);
-        assertThat(habits.get(0).getFrequency()).isEqualTo(frequency);
+        Assertions.assertThat(habits.get(0).getFrequency()).isEqualTo(frequency);
     }
 
     @Test
@@ -69,7 +70,7 @@ public class HabitServiceTest {
         habitService.deleteHabit(habit);
 
         // Assert
-        assertThat(habitService.getAllHabits()).isEmpty();
+        Assertions.assertThat(habitService.getAllHabits()).isEmpty();
     }
 
     @Test
