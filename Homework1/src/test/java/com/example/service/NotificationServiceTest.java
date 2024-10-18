@@ -1,6 +1,7 @@
-package org.example.service;
+package com.example.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class NotificationServiceTest {
@@ -12,6 +13,7 @@ public class NotificationServiceTest {
     }
 
     @Test
+    @DisplayName("Отправка напоминания о привычке должна успешно отправить уведомление")
     void sendHabitReminder_shouldSendReminder() {
         // Arrange
         String userEmail = "test@example.com";
@@ -21,4 +23,3 @@ public class NotificationServiceTest {
         notificationService.sendHabitReminder(userEmail, habitName);
     }
 }
-

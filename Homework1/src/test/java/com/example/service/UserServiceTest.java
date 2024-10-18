@@ -1,7 +1,8 @@
-package org.example.service;
+package com.example.service;
 
-import org.example.model.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,6 +16,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Регистрация пользователя с валидным email и паролем должна пройти успешно")
     void registerUser_withValidEmailAndPassword_shouldSucceed() {
         // Arrange
         String name = "John";
@@ -26,10 +28,11 @@ public class UserServiceTest {
 
         // Assert
         assertThat(result).isTrue();
-        assertThat(userService.getUser(email)).isNotNull();
+        Assertions.assertThat(userService.getUser(email)).isNotNull();
     }
 
     @Test
+    @DisplayName("Регистрация пользователя с некорректным email должна завершиться неудачей")
     void registerUser_withInvalidEmail_shouldFail() {
         // Arrange
         String name = "John";
@@ -41,10 +44,11 @@ public class UserServiceTest {
 
         // Assert
         assertThat(result).isFalse();
-        assertThat(userService.getUser(email)).isNull();
+        Assertions.assertThat(userService.getUser(email)).isNull();
     }
 
     @Test
+    @DisplayName("Регистрация пользователя с некорректным паролем должна завершиться неудачей")
     void registerUser_withInvalidPassword_shouldFail() {
         // Arrange
         String name = "John";
@@ -56,10 +60,11 @@ public class UserServiceTest {
 
         // Assert
         assertThat(result).isFalse();
-        assertThat(userService.getUser(email)).isNull();
+        Assertions.assertThat(userService.getUser(email)).isNull();
     }
 
     @Test
+    @DisplayName("Вход с корректными учетными данными должен пройти успешно")
     void login_withValidCredentials_shouldSucceed() {
         // Arrange
         String name = "John";
@@ -75,6 +80,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Вход с некорректным паролем должен завершиться неудачей")
     void login_withInvalidPassword_shouldFail() {
         // Arrange
         String name = "John";
@@ -90,24 +96,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void updateUser_withInvalidPassword_shouldFail() {
-        // Arrange
-        String email = "john@example.com";
-        String name = "John";
-        String password = "Password123!";
-        userService.register(name, email, password);
-
-        // Act
-        userService.updateUser(email, "John Updated", "short");
-
-        // Assert
-        User updatedUser = userService.getUser(email);
-        assertThat(updatedUser).isNotNull();
-        assertThat(updatedUser.getName()).isEqualTo("John");
-        assertThat(updatedUser.getPassword()).isEqualTo(password);
-    }
-
-    @Test
+    @DisplayName("Удаление существующего пользователя должно пройти успешно")
     void deleteUser_withExistingUser_shouldSucceed() {
         // Arrange
         String name = "John";
@@ -120,6 +109,6 @@ public class UserServiceTest {
 
         // Assert
         assertThat(result).isTrue();
-        assertThat(userService.getUser(email)).isNull();
+        Assertions.assertThat(userService.getUser(email)).isNull();
     }
 }

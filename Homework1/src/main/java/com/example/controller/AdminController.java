@@ -1,9 +1,9 @@
-package org.example.controller;
+package com.example.controller;
 
-import org.example.model.Habit;
-import org.example.model.User;
-import org.example.service.HabitService;
-import org.example.service.UserService;
+import com.example.model.Habit;
+import com.example.model.User;
+import com.example.service.HabitService;
+import com.example.service.UserService;
 
 import java.util.List;
 
@@ -11,9 +11,14 @@ import java.util.List;
  * Controller for admin operations.
  */
 public class AdminController {
-    private final UserService userService = new UserService();
+    private final UserService userService;
 
-    private final HabitService habitService = new HabitService();
+    private final HabitService habitService;
+
+    public AdminController(UserService userService, HabitService habitService) {
+        this.userService = userService;
+        this.habitService = habitService;
+    }
 
     /**
      * Displays the list of all users.

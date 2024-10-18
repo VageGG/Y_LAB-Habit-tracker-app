@@ -1,19 +1,29 @@
-package org.example;
+package com.example;
 
-import org.example.controller.AdminController;
-import org.example.controller.UserController;
+import com.example.controller.UserController;
+import com.example.controller.AdminController;
+import com.example.service.HabitService;
+import com.example.service.NotificationService;
+import com.example.service.UserService;
 
 import java.util.Scanner;
 
 /**
  * Main class to run the Habit Tracker application.
+ *
  * @author Геворгян Ваге
  */
 public class HabitTrackerApp {
 
-    private final AdminController adminController = new AdminController();
+    private final UserService userService = new UserService();
 
-    private final UserController userController = new UserController();
+    private final HabitService habitService = new HabitService();
+
+    private final NotificationService notificationService = new NotificationService();
+
+    private final AdminController adminController = new AdminController(userService, habitService);
+
+    private final UserController userController = new UserController(userService, notificationService, habitService);
 
     private final Scanner scanner = new Scanner(System.in);
 

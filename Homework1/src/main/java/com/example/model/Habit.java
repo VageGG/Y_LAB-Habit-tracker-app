@@ -1,6 +1,6 @@
-package org.example.model;
+package com.example.model;
 
-import org.example.enums.Frequency;
+import com.example.enums.Frequency;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

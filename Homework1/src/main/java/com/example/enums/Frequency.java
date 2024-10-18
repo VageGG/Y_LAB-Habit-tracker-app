@@ -1,4 +1,4 @@
-package org.example.enums;
+package com.example.enums;
 
 /**
  * Enum representing the frequency of the habit.

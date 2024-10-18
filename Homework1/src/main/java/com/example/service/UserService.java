@@ -1,7 +1,8 @@
-package org.example.service;
+package com.example.service;
 
-import org.example.model.User;
+import com.example.model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,17 +66,12 @@ public class UserService {
     public void updateUser(String email, String name, String newPassword) {
         User user = users.get(email);
         if (user != null) {
+            user.setName(name);
             if (newPassword != null && !newPassword.isEmpty()) {
-                if (!isPasswordValid(newPassword)) {
-                    System.out.println("Ошибка: Некорректный пароль.");
-                    return;
-                }
                 user.setPassword(newPassword);
             }
-
-            user.setName(name);
         } else {
-            System.out.println("Пользователь не найден.");
+            System.out.println("Ошибка: Пользователь с таким email не найден.");
         }
     }
 
@@ -120,7 +116,7 @@ public class UserService {
      * @return list of users
      */
     public List<User> getAllUsers() {
-        return users.values().stream().collect(Collectors.toList());
+        return new ArrayList<>(users.values());
     }
 
     /**

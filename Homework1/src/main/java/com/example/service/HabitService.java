@@ -1,8 +1,8 @@
-package org.example.service;
+package com.example.service;
 
-import org.example.enums.Frequency;
-import org.example.model.Habit;
-import org.example.model.HabitExecution;
+import com.example.enums.Frequency;
+import com.example.model.Habit;
+import com.example.model.HabitExecution;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ public class HabitService {
     /**
      * Updates an existing habit.
      *
-     * @param habit      the habit to update
-     * @param newName    the new name
+     * @param habit          the habit to update
+     * @param newName        the new name
      * @param newDescription the new description
      */
     public void updateHabit(Habit habit, String newName, String newDescription) {
@@ -94,9 +94,9 @@ public class HabitService {
     /**
      * Generates statistics for a habit over a given period.
      *
-     * @param habit      the habit to analyze
-     * @param startDate  the start date
-     * @param endDate    the end date
+     * @param habit     the habit to analyze
+     * @param startDate the start date
+     * @param endDate   the end date
      * @return statistics of completed executions
      */
     public long getStatisticsForHabit(Habit habit, LocalDate startDate, LocalDate endDate) {
@@ -119,9 +119,9 @@ public class HabitService {
     /**
      * Gets the success rate for a habit over a given period.
      *
-     * @param habit      the habit to analyze
-     * @param startDate  the start date
-     * @param endDate    the end date
+     * @param habit     the habit to analyze
+     * @param startDate the start date
+     * @param endDate   the end date
      * @return success rate percentage
      */
     public double getSuccessRate(Habit habit, LocalDate startDate, LocalDate endDate) {

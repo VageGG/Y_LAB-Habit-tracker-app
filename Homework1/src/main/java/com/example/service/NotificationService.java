@@ -1,4 +1,4 @@
-package org.example.service;
+package com.example.service;
 
 /**
  * Service for sending notifications to users.
