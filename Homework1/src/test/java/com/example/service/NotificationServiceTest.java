@@ -1,24 +1,25 @@
- package com.example.service;
+package com.example.service;
 
- import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
- public class NotificationServiceTest {
-     private NotificationService notificationService;
+public class NotificationServiceTest {
+    private NotificationService notificationService;
 
-     @BeforeEach
-     void setUp() {
+    @BeforeEach
+    void setUp() {
         notificationService = new NotificationService();
     }
 
-     @Test
-     void sendHabitReminder_shouldSendReminder() {
-         // Arrange
-         String userEmail = "test@example.com";
-         String habitName = "Exercise";
+    @Test
+    @DisplayName("Отправка напоминания о привычке должна успешно отправить уведомление")
+    void sendHabitReminder_shouldSendReminder() {
+        // Arrange
+        String userEmail = "test@example.com";
+        String habitName = "Exercise";
 
-         // Act
-         notificationService.sendHabitReminder(userEmail, habitName);
-     }
- }
-
+        // Act
+        notificationService.sendHabitReminder(userEmail, habitName);
+    }
+}

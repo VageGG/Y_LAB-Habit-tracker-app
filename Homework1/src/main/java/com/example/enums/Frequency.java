@@ -1,10 +1,10 @@
- package com.example.enums;
+package com.example.enums;
 
- /**
-  * Enum representing the frequency of the habit.
-  */
- public enum Frequency {
-     DAILY,
-     WEEKLY
+/**
+ * Enum representing the frequency of the habit.
+ */
+public enum Frequency {
+    DAILY,
+    WEEKLY
 
- }
+}
