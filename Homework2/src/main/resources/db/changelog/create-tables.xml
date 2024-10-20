@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="0" author="Vage">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS my_schema;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="Vage">
+        <createTable tableName="users" schemaName="my_schema">
+            <column name="id" type="integer">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="blocked" type="boolean" defaultValue="false"/>
+        </createTable>
+
+        <createTable tableName="habit" schemaName="my_schema">
+            <column name="id" type="integer">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="frequency" type="varchar(255)"/>
+            <column name="creation_date" type="date" defaultValueDate="CURRENT_DATE"/>
+            <column name="user_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="habit_execution" schemaName="my_schema">
+            <column name="id" type="integer">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="date" defaultValueDate="CURRENT_DATE"/>
+            <column name="completed" type="boolean"/>
+            <column name="habit_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="Vage">
+        <createSequence sequenceName="users_id_seq" schemaName="my_schema" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="habit_id_seq" schemaName="my_schema" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="habit_execution_id_seq" schemaName="my_schema" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="4" author="Vage">
+        <addForeignKeyConstraint
+                baseTableName="habit"
+                baseColumnNames="user_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                constraintName="fk_habit_user"
+                baseTableSchemaName="my_schema"
+                referencedTableSchemaName="my_schema"/>
+
+        <addForeignKeyConstraint
+                baseTableName="habit_execution"
+                baseColumnNames="habit_id"
+                referencedTableName="habit"
+                referencedColumnNames="id"
+                constraintName="fk_habit_execution_habit"
+                baseTableSchemaName="my_schema"
+                referencedTableSchemaName="my_schema"/>
+    </changeSet>
+</databaseChangeLog>

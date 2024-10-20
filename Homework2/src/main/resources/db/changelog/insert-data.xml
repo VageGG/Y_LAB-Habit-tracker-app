@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="5" author="Vage">
+        <insert tableName="users" schemaName="my_schema">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="John Doe"/>
+            <column name="email" value="john.doe@example.com"/>
+            <column name="password" value="hashed_password"/>
+            <column name="blocked" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="users" schemaName="my_schema">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Jane Smith"/>
+            <column name="email" value="jane.smith@example.com"/>
+            <column name="password" value="another_hashed_password"/>
+            <column name="blocked" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="habit" schemaName="my_schema">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Morning Jogging"/>
+            <column name="description" value="Jog every morning for 30 minutes"/>
+            <column name="frequency" value="daily"/>
+            <column name="creation_date" valueDate="2024-01-01"/>
+            <column name="user_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="habit" schemaName="my_schema">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Read a Book"/>
+            <column name="description" value="Read at least 20 pages of a book every evening"/>
+            <column name="frequency" value="daily"/>
+            <column name="creation_date" valueDate="2024-02-01"/>
+            <column name="user_id" valueNumeric="2"/>
+        </insert>
+
+        <insert tableName="habit_execution" schemaName="my_schema">
+            <column name="id" valueNumeric="1"/>
+            <column name="date" valueDate="2024-01-02"/>
+            <column name="completed" valueBoolean="true"/>
+            <column name="habit_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="habit_execution" schemaName="my_schema">
+            <column name="id" valueNumeric="2"/>
+            <column name="date" valueDate="2024-02-03"/>
+            <column name="completed" valueBoolean="false"/>
+            <column name="habit_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="6" author="Vage">
+        <sql>
+            SELECT setval('my_schema.users_id_seq', (SELECT MAX(id) FROM my_schema.users));
+        </sql>
+    </changeSet>
+
+    <changeSet id="7" author="Vage">
+        <sql>
+            SELECT setval('my_schema.habit_id_seq', (SELECT MAX(id) FROM my_schema.habit));
+        </sql>
+    </changeSet>
+
+    <changeSet id="8" author="Vage">
+        <sql>
+            SELECT setval('my_schema.habit_execution_id_seq', (SELECT MAX(id) FROM my_schema.habit_execution));
+        </sql>
+    </changeSet>
+</databaseChangeLog>
