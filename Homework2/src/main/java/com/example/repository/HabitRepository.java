@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import com.example.config.DataBaseConnection;
+import com.example.config.SQLQueries;
 import com.example.model.Habit;
 import com.example.enums.Frequency;
 
@@ -8,15 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HabitRepository {
-    private final Connection connection;
 
-    public HabitRepository(Connection connection) {
-        this.connection = connection;
-    }
 
     public void save(Habit habit) {
-        String sql = "INSERT INTO my_schema.habit (name, description, frequency, creation_date, user_id) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(SQLQueries.SAVE_HABIT, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, habit.getName());
             stmt.setString(2, habit.getDescription());
             stmt.setString(3, habit.getFrequencyAsString());
@@ -32,15 +30,16 @@ public class HabitRepository {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // Используйте логгер вместо e.printStackTrace()
+            System.err.println("Ошибка сохранения привычки: " + e.getMessage());
         }
     }
 
     public List<Habit> findAll() {
         List<Habit> habits = new ArrayList<>();
-        String sql = "SELECT * FROM my_schema.habit";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection connection = DataBaseConnection.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(SQLQueries.FIND_ALL_HABITS)) {
             while (rs.next()) {
                 Habit habit = new Habit();
                 habit.setId(rs.getInt("id"));
@@ -52,18 +51,18 @@ public class HabitRepository {
                 habits.add(habit);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Ошибка получения привычек: " + e.getMessage());
         }
         return habits;
     }
 
     public void delete(Integer habitId) {
-        String sql = "DELETE FROM my_schema.habit WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(SQLQueries.DELETE_HABIT)) {
             stmt.setInt(1, habitId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Ошибка удаления привычки: " + e.getMessage());
         }
     }
 }

@@ -21,7 +21,7 @@ public class Habit {
     private Frequency frequency;
     private LocalDate creationDate;
     private Integer userId;
-    private List<HabitExecution> executionHistory = new ArrayList<>(); // История выполнения привычек
+    private List<HabitExecution> executionHistory = new ArrayList<>();
 
     public Habit(String name, String description, Frequency frequency, Integer userId) {
         if (name == null || name.trim().isEmpty()) {
@@ -46,32 +46,6 @@ public class Habit {
 
     public String getFrequencyAsString() {
         return frequency.name();
-    }
-
-    public int getCurrentStreak() {
-        int streak = 0;
-        LocalDate today = LocalDate.now();
-
-        for (int i = executionHistory.size() - 1; i >= 0; i--) {
-            HabitExecution execution = executionHistory.get(i);
-            if (execution.isCompleted() && execution.getDate().isEqual(today.minusDays(streak))) {
-                streak++;
-            } else {
-                break;
-            }
-        }
-        return streak;
-    }
-
-    public double getSuccessRate(LocalDate startDate, LocalDate endDate) {
-        long completedCount = executionHistory.stream()
-                .filter(execution -> !execution.getDate().isBefore(startDate) && !execution.getDate().isAfter(endDate))
-                .filter(HabitExecution::isCompleted)
-                .count();
-        long totalCount = executionHistory.stream()
-                .filter(execution -> !execution.getDate().isBefore(startDate) && !execution.getDate().isAfter(endDate))
-                .count();
-        return totalCount > 0 ? (double) completedCount / totalCount * 100 : 0;
     }
 
     public void markAsCompleted() {

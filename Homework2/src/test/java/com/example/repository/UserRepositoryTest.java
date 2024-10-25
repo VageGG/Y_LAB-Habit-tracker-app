@@ -34,7 +34,7 @@ public class UserRepositoryTest {
 
         initializeDatabase();
 
-        userRepository = new UserRepository(connection);
+        userRepository = new UserRepository();
     }
 
     private void initializeDatabase() throws SQLException {

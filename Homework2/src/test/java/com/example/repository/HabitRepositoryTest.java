@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import com.example.config.DataBaseConnection;
 import com.example.enums.Frequency;
 import com.example.model.Habit;
 import org.junit.jupiter.api.*;
@@ -36,7 +37,7 @@ public class HabitRepositoryTest {
 
         initializeDatabase();
 
-        habitRepository = new HabitRepository(connection);
+        habitRepository = new HabitRepository();
     }
 
     private void initializeDatabase() throws SQLException {

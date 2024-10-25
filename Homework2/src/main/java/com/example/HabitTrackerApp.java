@@ -1,8 +1,11 @@
 package com.example;
 
+import com.example.config.AppFactory;
+import com.example.config.DataBaseConnection;
+import com.example.config.InputHandler;
+import com.example.config.LiquibaseMigration;
 import com.example.controller.UserController;
 import com.example.controller.AdminController;
-import com.example.repository.NotificationSender;
 import com.example.service.HabitService;
 import com.example.service.NotificationService;
 import com.example.service.UserService;
@@ -10,7 +13,6 @@ import com.example.service.UserService;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 /**
  * Main class to run the Habit Tracker application.
@@ -22,23 +24,18 @@ public class HabitTrackerApp {
     private final NotificationService notificationService;
     private final AdminController adminController;
     private final UserController userController;
-    private final Scanner scanner = new Scanner(System.in);
+    private final InputHandler inputHandler;
 
     public HabitTrackerApp() throws SQLException, IOException {
         Connection connection = DataBaseConnection.getConnection();
-
         LiquibaseMigration.runMigration();
 
-        this.userService = new UserService(connection);
-        this.habitService = new HabitService(connection);
-        this.notificationService = new NotificationService(new NotificationSender() {
-            @Override
-            public void send(String email, String message) {
-                System.out.println("Email: " + email + ", Сообщение: " + message);
-            }
-        });
-        this.adminController = new AdminController(userService, habitService);
-        this.userController = new UserController(userService, notificationService, habitService);
+        this.userService = AppFactory.createUserService();
+        this.habitService = AppFactory.createHabitService();
+        this.notificationService = AppFactory.createNotificationService();
+        this.adminController = AppFactory.createAdminController(userService, habitService);
+        this.userController = AppFactory.createUserController(userService, notificationService, habitService);
+        this.inputHandler = AppFactory.createInputHandler();
     }
 
     public static void main(String[] args) {
@@ -52,70 +49,53 @@ public class HabitTrackerApp {
 
     private void start() {
         while (true) {
-            System.out.println("1. Вход как администратор");
-            System.out.println("2. Вход как пользователь");
-            System.out.println("3. Выход");
-            System.out.print("Выберите опцию: ");
-            int option = getInput();
+            System.out.println("""
+                1. Вход как администратор
+                2. Вход как пользователь
+                3. Выход
+                Выберите опцию:""");
+            int option = inputHandler.getIntInput();
 
             switch (option) {
-                case 1:
-                    adminMenu();
-                    break;
-                case 2:
-                    userController.start();
-                    break;
-                case 3:
+                case 1 -> adminMenu();
+                case 2 -> userController.start();
+                case 3 -> {
                     System.out.println("Выход из приложения.");
                     return;
-                default:
-                    System.out.println("Неверный выбор, попробуйте снова.");
-            }
-        }
-    }
-
-    private int getInput() {
-        while (true) {
-            try {
-                return Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.print("Пожалуйста, введите число: ");
+                }
+                default -> System.out.println("Неверный выбор, попробуйте снова.");
             }
         }
     }
 
     private void adminMenu() {
         while (true) {
-            System.out.println("1. Показать пользователей");
-            System.out.println("2. Показать привычки");
-            System.out.println("3. Заблокировать пользователя");
-            System.out.println("4. Удалить пользователя");
-            System.out.println("5. Назад");
-            System.out.print("Выберите опцию: ");
-            int option = getInput();
+            System.out.println("""
+                1. Показать пользователей
+                2. Показать привычки
+                3. Заблокировать пользователя
+                4. Удалить пользователя
+                5. Назад
+                Выберите опцию:""");
+            int option = inputHandler.getIntInput();
 
             switch (option) {
-                case 1:
-                    adminController.displayUsers();
-                    break;
-                case 2:
-                    adminController.displayHabits();
-                    break;
-                case 3:
+                case 1 -> adminController.displayUsers();
+                case 2 -> adminController.displayHabits();
+                case 3 -> {
                     System.out.print("Введите email пользователя для блокировки: ");
-                    String blockEmail = scanner.nextLine();
+                    String blockEmail = inputHandler.getStringInput();
                     adminController.blockUser(blockEmail);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     System.out.print("Введите email пользователя для удаления: ");
-                    String deleteEmail = scanner.nextLine();
+                    String deleteEmail = inputHandler.getStringInput();
                     adminController.deleteUser(deleteEmail);
-                    break;
-                case 5:
-                    return; // Возврат в главное меню
-                default:
-                    System.out.println("Неверный выбор, попробуйте снова.");
+                }
+                case 5 -> { return; }
+                default -> System.out.println("Неверный выбор, попробуйте снова.");
             }
         }
     }
 }
+

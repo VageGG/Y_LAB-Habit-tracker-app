@@ -28,7 +28,7 @@ class HabitServiceTest {
         }
 
         habitRepository = mock(HabitRepository.class);
-        habitService = new HabitService(connection); // Передаем mock в HabitService
+        habitService = new HabitService(); // Передаем mock в HabitService
     }
 
 

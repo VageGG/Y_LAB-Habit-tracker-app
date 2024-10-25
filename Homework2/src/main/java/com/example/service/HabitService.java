@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.config.DataBaseConnection;
 import com.example.enums.Frequency;
 import com.example.model.Habit;
 import com.example.model.HabitExecution;
@@ -16,11 +17,9 @@ import java.util.stream.Collectors;
 public class HabitService {
     private final HabitRepository habitRepository;
 
-    private final Connection connection;
 
-    public HabitService(Connection connection) {
-        this.connection = connection;
-        this.habitRepository = new HabitRepository(connection);
+    public HabitService() {
+        this.habitRepository = new HabitRepository();
     }
 
     /**
@@ -128,7 +127,19 @@ public class HabitService {
      * @return current streak count
      */
     public int getCurrentStreak(Habit habit) {
-        return habit.getCurrentStreak();
+        int streak = 0;
+        LocalDate today = LocalDate.now();
+
+        List<HabitExecution> executionHistory = habit.getExecutionHistory();
+        for (int i = executionHistory.size() - 1; i >= 0; i--) {
+            HabitExecution execution = executionHistory.get(i);
+            if (execution.isCompleted() && execution.getDate().isEqual(today.minusDays(streak))) {
+                streak++;
+            } else {
+                break;
+            }
+        }
+        return streak;
     }
 
     /**
@@ -140,6 +151,14 @@ public class HabitService {
      * @return success rate percentage
      */
     public double getSuccessRate(Habit habit, LocalDate startDate, LocalDate endDate) {
-        return habit.getSuccessRate(startDate, endDate);
+        List<HabitExecution> executionHistory = habit.getExecutionHistory();
+        long completedCount = executionHistory.stream()
+                .filter(execution -> !execution.getDate().isBefore(startDate) && !execution.getDate().isAfter(endDate))
+                .filter(HabitExecution::isCompleted)
+                .count();
+        long totalCount = executionHistory.stream()
+                .filter(execution -> !execution.getDate().isBefore(startDate) && !execution.getDate().isAfter(endDate))
+                .count();
+        return totalCount > 0 ? (double) completedCount / totalCount * 100 : 0;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.config.DataBaseConnection;
 import com.example.model.User;
 import com.example.repository.UserRepository;
 
@@ -20,8 +21,8 @@ public class UserService {
      *
      * @param connection the database connection
      */
-    public UserService(Connection connection) {
-        this.userRepository = new UserRepository(connection);
+    public UserService() {
+        this.userRepository = new UserRepository();
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import com.example.config.DataBaseConnection;
+import com.example.config.SQLQueries;
 import com.example.model.User;
 
 import java.sql.*;
@@ -10,16 +12,6 @@ import java.util.List;
  * Repository for managing user data in the database.
  */
 public class UserRepository {
-    private final Connection connection;
-
-    /**
-     * Constructs a UserRepository with the specified database connection.
-     *
-     * @param connection the database connection
-     */
-    public UserRepository(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Saves a new user to the database.
@@ -28,8 +20,8 @@ public class UserRepository {
      * @throws SQLException if a database access error occurs
      */
     public void save(User user) throws SQLException {
-        String sql = "INSERT INTO my_schema.users (id, name, email, password, blocked) VALUES (nextval('my_schema.users_id_seq'), ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(SQLQueries.SAVE_USER)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
@@ -46,8 +38,8 @@ public class UserRepository {
      * @throws SQLException if a database access error occurs
      */
     public User findByEmail(String email) throws SQLException {
-        String sql = "SELECT * FROM my_schema.users WHERE email = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(SQLQueries.FIND_USER_BY_EMAIL)) {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -65,8 +57,9 @@ public class UserRepository {
      */
     public List<User> findAll() throws SQLException {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM my_schema.users";
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection connection = DataBaseConnection.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(SQLQueries.FIND_ALL_USERS)) {
             while (rs.next()) {
                 users.add(new User(rs.getString("name"), rs.getString("email"), rs.getString("password")));
             }
@@ -81,8 +74,8 @@ public class UserRepository {
      * @throws SQLException if a database access error occurs
      */
     public void update(User user) throws SQLException {
-        String sql = "UPDATE my_schema.users SET name = ?, password = ?, blocked = ? WHERE email = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(SQLQueries.UPDATE_USER)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getPassword());
             stmt.setBoolean(3, user.isBlocked());
@@ -103,8 +96,8 @@ public class UserRepository {
      * @throws SQLException if a database access error occurs
      */
     public void deleteByEmail(String email) throws SQLException {
-        String sql = "DELETE FROM my_schema.users WHERE email = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataBaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(SQLQueries.DELETE_USER_BY_EMAIL)) {
             stmt.setString(1, email);
             stmt.executeUpdate();
         }
